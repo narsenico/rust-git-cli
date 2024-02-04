@@ -36,6 +36,11 @@ fn get_local_branches(repo: &Repository) -> Result<Vec<BranchInfo>> {
     Ok(branches)
 }
 
+fn switch_branch(repo: &Repository, branch_name: &str) -> Result<()> {
+    // repo.set_head(&("refs/heads/".to_owned() + branch_name));
+    todo!("'git switch' try repo set_head")
+}
+
 fn main() -> Result<()> {
     let mut args = env::args();
     let repo_path = args.nth(1).unwrap();

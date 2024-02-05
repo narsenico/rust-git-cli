@@ -5,5 +5,18 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "gl"
+path = "src/main-list-local.rs"
+
+[[bin]]
+name = "gsw"
+path = "src/main-switch.rs"
+
+[[bin]]
+name = "gm"
+path = "src/main-merge.rs"
+
 [dependencies]
+dialoguer = "0.11.0"
 git2 = "0.18.1"

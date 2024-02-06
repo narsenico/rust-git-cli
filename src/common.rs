@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{env, error::Error, ffi::OsStr};
 
 use git2::{Branch, BranchType, Repository};
 
@@ -36,4 +36,22 @@ fn get_branches(repo: &Repository, branch_type: Option<BranchType>) -> Result<Ve
 
 pub fn get_local_branches(repo: &Repository) -> Result<Vec<BranchInfo>> {
     get_branches(repo, Some(BranchType::Local))
+}
+
+pub fn get_repo_path() -> Option<String> {
+    let args = env::args().collect::<Vec<String>>();
+    if let Some((index, _)) = args.iter().enumerate().find(|(_, a)| **a == "--path") {
+        return args.get(index + 1).map(String::from);
+    }
+
+    Some(".".to_string())
+}
+
+pub fn get_exe_name() -> Result<String> {
+   Ok(env::current_exe()?
+        .file_name()
+        .map(OsStr::to_str)
+        .flatten()
+        .map(String::from)
+        .expect("Program name missing"))
 }

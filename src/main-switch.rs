@@ -2,11 +2,11 @@ mod common;
 
 use std::process::ExitCode;
 
-use common::Result;
+use common::{get_repo_path, Result};
 use dialoguer::Select;
 use git2::Repository;
 
-use crate::common::get_local_branches;
+use crate::common::{get_exe_name, get_local_branches};
 
 fn switch_branch(repo: &Repository, branch_name: &str) -> Result<()> {
     repo.set_head(&("refs/heads/".to_owned() + branch_name))?;
@@ -14,7 +14,10 @@ fn switch_branch(repo: &Repository, branch_name: &str) -> Result<()> {
 }
 
 fn main() -> Result<ExitCode> {
-    let repo_path = ".";
+    let Some(repo_path) = get_repo_path() else {
+        eprintln!("Usage: {exe} [--path <repo path>]", exe = get_exe_name()?);
+        return Ok(ExitCode::FAILURE);
+    };
     let repo = Repository::open(&repo_path)?;
     let branches = get_local_branches(&repo)?;
     let names = branches
@@ -32,6 +35,7 @@ fn main() -> Result<ExitCode> {
     let choice = Select::new()
         .with_prompt("Select branch to switch into")
         .items(&names)
+        .default(0)
         .interact_opt()?;
 
     let Some(choice) = choice else {

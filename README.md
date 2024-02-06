@@ -1,6 +1,7 @@
 # playing with git
 
 ## TODO
+- [ ] git list branches
 - [ ] git switch
 - [ ] git merge
 

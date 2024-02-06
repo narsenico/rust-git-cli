@@ -4,6 +4,7 @@
 - [ ] git list branches
 - [ ] git switch
 - [ ] git merge
+- [ ] handle all errors
 
 ## Commands
 - gb: git branch -av

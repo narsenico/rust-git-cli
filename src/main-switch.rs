@@ -33,7 +33,7 @@ fn main() -> Result<ExitCode> {
     }
 
     let choice = Select::new()
-        .with_prompt("Select branch to switch into")
+        .with_prompt("Select branch to switch to")
         .items(&names)
         .default(0)
         .interact_opt()?;
@@ -44,7 +44,9 @@ fn main() -> Result<ExitCode> {
     };
 
     if let Some(selected_branch) = branches.get(choice) {
-        switch_branch(&repo, selected_branch.name.as_str())?;
+        let branch_name = selected_branch.name.as_str();
+        switch_branch(&repo, branch_name)?;
+        println!("Switched to branch {branch_name}");
     }
 
     Ok(ExitCode::SUCCESS)

@@ -53,5 +53,5 @@ pub fn get_exe_name() -> Result<String> {
         .map(OsStr::to_str)
         .flatten()
         .map(String::from)
-        .expect("Program name missing"))
+        .expect("Program name missing")) // TODO: handle error
 }

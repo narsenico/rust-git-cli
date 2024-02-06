@@ -1,5 +1,7 @@
 mod common;
 
+use std::process::ExitCode;
+
 use common::{get_local_branches, BranchInfo, Result};
 use git2::Repository;
 
@@ -11,7 +13,7 @@ fn print_branch(branch: &BranchInfo) {
     );
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<ExitCode> {
     let repo_path = ".";
     let repo = Repository::open(&repo_path)?;
     let branches = get_local_branches(&repo)?;
@@ -19,5 +21,5 @@ fn main() -> Result<()> {
         print_branch(&branch);
     }
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }
